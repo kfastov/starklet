@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '~~/lib/supabase';
 
 export async function POST(request: NextRequest) {
     try {
@@ -15,6 +15,7 @@ export async function POST(request: NextRequest) {
                     session_token: sessionToken,
                     signature_r: signature.r,
                     signature_s: signature.s,
+                    status: 'pending',
                     created_at: new Date().toISOString(),
                 }
             ])

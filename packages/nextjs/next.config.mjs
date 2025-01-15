@@ -2,7 +2,7 @@
 import webpack from "webpack";
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     // make sure no one injects anything funny in svg
     dangerouslyAllowSVG: true,
