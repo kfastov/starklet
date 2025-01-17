@@ -1,4 +1,4 @@
-import { stark, ec, encode } from 'starknet';
+import { stark, ec, encode, hash } from 'starknet';
 import open from 'open';
 
 const waitForSessionCompletion = async (sessionId: string, sessionToken: string, maxAttempts = 60) => {
@@ -55,7 +55,6 @@ const main = async () => {
     });
 
     const result = await response.json();
-    console.log('Server response:', result);
 
     if (result.success) {
         const sessionId = result.data.id;
@@ -68,6 +67,25 @@ const main = async () => {
         try {
             const accountAddress = await waitForSessionCompletion(sessionId, sessionToken);
             console.log('ACCOUNT_ADDRESS=', accountAddress);
+            const starkletAddress = computeStarkletAddress(sessionToken, starkKeyPub, accountAddress);
+            console.log('STARKLET_ADDRESS=', starkletAddress);
+            
+            // Save configuration to file
+            const fs = require('fs');
+            const config = {
+                privateKey,
+                publicKey: starkKeyPub,
+                accountAddress,
+                starkletAddress
+            };
+            
+            fs.writeFileSync(
+                'starklet.config.json',
+                JSON.stringify(config, null, 2),
+                'utf8'
+            );
+            console.log('Configuration saved to starklet.config.json');
+            
             process.exit(0);
         } catch (error) {
             console.error('Error:', error.message);
@@ -77,6 +95,19 @@ const main = async () => {
         console.error('Failed to create session');
         process.exit(1);
     }
+};
+
+const computeStarkletAddress = (salt: string, publicKey: string, accountAddress: string) => {
+  // TODO: write real class hash here (or get from server, but we dont trust anyone)
+  const STARKLET_CLASS_HASH = '0x0000000000000000000000000000000000000000000000000000000000000000'
+    
+  const starkletAddress = hash.calculateContractAddressFromHash(
+    salt,
+    STARKLET_CLASS_HASH,
+    [publicKey],
+    accountAddress
+  );
+  return starkletAddress;
 };
 
 main().catch(console.error);
