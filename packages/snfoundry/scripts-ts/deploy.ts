@@ -1,5 +1,6 @@
 import {
   deployContract,
+  declareContract,
   executeDeployCalls,
   exportDeployments,
   deployer,
@@ -42,8 +43,14 @@ import { green } from "./helpers/colorize-log";
  * @returns {Promise<void>}
  */
 const deployScript = async (): Promise<void> => {
+  // First declare StarkletAccount (without deploying)
+  const { classHash: accountClassHash } = await declareContract({
+    contract: "StarkletAccount",
+  });
+
+  // Then deploy StarkletFactory
   await deployContract({
-    contract: "YourContract",
+    contract: "StarkletFactory",
     constructorArgs: {
       owner: deployer.address,
     },

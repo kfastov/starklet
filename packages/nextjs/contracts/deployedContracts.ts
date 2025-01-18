@@ -3,6 +3,326 @@
  * You should not edit it manually or your changes might be overwritten.
  */
 
-const deployedContracts = {} as const;
+const deployedContracts = {
+  devnet: {
+    StarkletFactory: {
+      address:
+        "0x2122e0e977e7e4b6b2a4835d8af5df13b455136c84c2a62a7461c80697185b4",
+      abi: [
+        {
+          type: "impl",
+          name: "StarkletFactoryImpl",
+          interface_name: "contracts::StarkletFactory::IStarkletFactory",
+        },
+        {
+          type: "struct",
+          name: "core::byte_array::ByteArray",
+          members: [
+            {
+              name: "data",
+              type: "core::array::Array::<core::bytes_31::bytes31>",
+            },
+            {
+              name: "pending_word",
+              type: "core::felt252",
+            },
+            {
+              name: "pending_word_len",
+              type: "core::integer::u32",
+            },
+          ],
+        },
+        {
+          type: "struct",
+          name: "core::integer::u256",
+          members: [
+            {
+              name: "low",
+              type: "core::integer::u128",
+            },
+            {
+              name: "high",
+              type: "core::integer::u128",
+            },
+          ],
+        },
+        {
+          type: "struct",
+          name: "contracts::StarkletFactory::StarkletDeploySettings",
+          members: [
+            {
+              name: "owner",
+              type: "core::starknet::contract_address::ContractAddress",
+            },
+            {
+              name: "public_key",
+              type: "core::felt252",
+            },
+            {
+              name: "name",
+              type: "core::byte_array::ByteArray",
+            },
+            {
+              name: "initial_balance",
+              type: "core::integer::u256",
+            },
+            {
+              name: "quote_period",
+              type: "core::integer::u64",
+            },
+            {
+              name: "quote_limit",
+              type: "core::integer::u256",
+            },
+            {
+              name: "starklet_address_salt",
+              type: "core::felt252",
+            },
+          ],
+        },
+        {
+          type: "interface",
+          name: "contracts::StarkletFactory::IStarkletFactory",
+          items: [
+            {
+              type: "function",
+              name: "deploy_starklet",
+              inputs: [
+                {
+                  name: "settings",
+                  type: "contracts::StarkletFactory::StarkletDeploySettings",
+                },
+              ],
+              outputs: [],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "get_starklet_class_hash",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::starknet::class_hash::ClassHash",
+                },
+              ],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "set_starklet_class_hash",
+              inputs: [
+                {
+                  name: "class_hash",
+                  type: "core::starknet::class_hash::ClassHash",
+                },
+              ],
+              outputs: [],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "get_user_starklets_count",
+              inputs: [
+                {
+                  name: "owner",
+                  type: "core::starknet::contract_address::ContractAddress",
+                },
+              ],
+              outputs: [
+                {
+                  type: "core::integer::u256",
+                },
+              ],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "get_user_starklet_at",
+              inputs: [
+                {
+                  name: "owner",
+                  type: "core::starknet::contract_address::ContractAddress",
+                },
+                {
+                  name: "index",
+                  type: "core::integer::u256",
+                },
+              ],
+              outputs: [
+                {
+                  type: "core::starknet::contract_address::ContractAddress",
+                },
+              ],
+              state_mutability: "external",
+            },
+          ],
+        },
+        {
+          type: "impl",
+          name: "OwnableImpl",
+          interface_name: "openzeppelin_access::ownable::interface::IOwnable",
+        },
+        {
+          type: "interface",
+          name: "openzeppelin_access::ownable::interface::IOwnable",
+          items: [
+            {
+              type: "function",
+              name: "owner",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::starknet::contract_address::ContractAddress",
+                },
+              ],
+              state_mutability: "view",
+            },
+            {
+              type: "function",
+              name: "transfer_ownership",
+              inputs: [
+                {
+                  name: "new_owner",
+                  type: "core::starknet::contract_address::ContractAddress",
+                },
+              ],
+              outputs: [],
+              state_mutability: "external",
+            },
+            {
+              type: "function",
+              name: "renounce_ownership",
+              inputs: [],
+              outputs: [],
+              state_mutability: "external",
+            },
+          ],
+        },
+        {
+          type: "constructor",
+          name: "constructor",
+          inputs: [
+            {
+              name: "owner",
+              type: "core::starknet::contract_address::ContractAddress",
+            },
+          ],
+        },
+        {
+          type: "event",
+          name: "openzeppelin_access::ownable::ownable::OwnableComponent::OwnershipTransferred",
+          kind: "struct",
+          members: [
+            {
+              name: "previous_owner",
+              type: "core::starknet::contract_address::ContractAddress",
+              kind: "key",
+            },
+            {
+              name: "new_owner",
+              type: "core::starknet::contract_address::ContractAddress",
+              kind: "key",
+            },
+          ],
+        },
+        {
+          type: "event",
+          name: "openzeppelin_access::ownable::ownable::OwnableComponent::OwnershipTransferStarted",
+          kind: "struct",
+          members: [
+            {
+              name: "previous_owner",
+              type: "core::starknet::contract_address::ContractAddress",
+              kind: "key",
+            },
+            {
+              name: "new_owner",
+              type: "core::starknet::contract_address::ContractAddress",
+              kind: "key",
+            },
+          ],
+        },
+        {
+          type: "event",
+          name: "openzeppelin_access::ownable::ownable::OwnableComponent::Event",
+          kind: "enum",
+          variants: [
+            {
+              name: "OwnershipTransferred",
+              type: "openzeppelin_access::ownable::ownable::OwnableComponent::OwnershipTransferred",
+              kind: "nested",
+            },
+            {
+              name: "OwnershipTransferStarted",
+              type: "openzeppelin_access::ownable::ownable::OwnableComponent::OwnershipTransferStarted",
+              kind: "nested",
+            },
+          ],
+        },
+        {
+          type: "event",
+          name: "contracts::StarkletFactory::StarkletFactory::StarkletDeployed",
+          kind: "struct",
+          members: [
+            {
+              name: "starklet_address",
+              type: "core::starknet::contract_address::ContractAddress",
+              kind: "key",
+            },
+            {
+              name: "starklet_owner",
+              type: "core::starknet::contract_address::ContractAddress",
+              kind: "key",
+            },
+            {
+              name: "starklet_name",
+              type: "core::byte_array::ByteArray",
+              kind: "data",
+            },
+            {
+              name: "starklet_public_key",
+              type: "core::felt252",
+              kind: "data",
+            },
+            {
+              name: "starklet_initial_balance",
+              type: "core::integer::u256",
+              kind: "data",
+            },
+            {
+              name: "starklet_quote_period",
+              type: "core::integer::u64",
+              kind: "data",
+            },
+            {
+              name: "starklet_quote_limit",
+              type: "core::integer::u256",
+              kind: "data",
+            },
+          ],
+        },
+        {
+          type: "event",
+          name: "contracts::StarkletFactory::StarkletFactory::Event",
+          kind: "enum",
+          variants: [
+            {
+              name: "OwnableEvent",
+              type: "openzeppelin_access::ownable::ownable::OwnableComponent::Event",
+              kind: "flat",
+            },
+            {
+              name: "StarkletDeployed",
+              type: "contracts::StarkletFactory::StarkletFactory::StarkletDeployed",
+              kind: "nested",
+            },
+          ],
+        },
+      ],
+      classHash:
+        "0x33da8591beb3cd86e45855451ee40500036b2b012fe0d841668b44418d55a95",
+    },
+  },
+} as const;
 
 export default deployedContracts;

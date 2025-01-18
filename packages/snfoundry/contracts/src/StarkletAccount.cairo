@@ -5,7 +5,7 @@ pub trait IStarkletAccount<TContractState> {
 }
 
 #[starknet::contract(account)]
-mod YourContract {
+mod StarkletAccount {
     use starknet::{get_tx_info};
     use openzeppelin_account::AccountComponent;
     use openzeppelin_introspection::src5::SRC5Component;
