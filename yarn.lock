@@ -2265,6 +2265,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@ss-2/cli@workspace:packages/cli"
   dependencies:
+    "@ss-2/nextjs": "workspace:packages/nextjs"
     "@types/node": ^20
     "@types/prettier": ^2
     "@types/yargs": ^17.0.32

@@ -76,21 +76,16 @@ const main = async () => {
             const starkletAddress = computeStarkletAddress(0, starkKeyPub, accountAddress);
             console.log('STARKLET_ADDRESS=', starkletAddress);
             
-            // Save configuration to file
+            // Save configuration to .env file
             const fs = require('fs');
-            const config = {
-                privateKey,
-                publicKey: starkKeyPub,
-                accountAddress,
-                starkletAddress
-            };
+            const envContent = `
+PRIVATE_KEY=${privateKey}
+PUBLIC_KEY=${starkKeyPub}
+ACCOUNT_ADDRESS=${starkletAddress}
+`;
             
-            fs.writeFileSync(
-                'starklet.config.json',
-                JSON.stringify(config, null, 2),
-                'utf8'
-            );
-            console.log('Configuration saved to starklet.config.json');
+            fs.appendFileSync('.env', envContent.trim() + '\n');
+            console.log('Configuration appended to .env file');
             
             process.exit(0);
         } catch (error) {

@@ -8,6 +8,7 @@ import { useAccount } from '~~/hooks/useAccount';
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-stark/useScaffoldWriteContract";
 import { useScaffoldEventHistory } from "~~/hooks/scaffold-stark/useScaffoldEventHistory";
 import type { GetTransactionReceiptResponse } from "starknet";
+import Link from 'next/link';
 
 // Add custom type for receipt
 type StarknetReceipt = {
@@ -253,13 +254,21 @@ export default function SessionPage({ params }: { params: { sessionId: string } 
                     {signature && <div>Signature received</div>}
                     
                     {deploymentStatus === 'success' && (
-                        <div className="text-green-500">
-                            Starklet deployed successfully!
-                            {deployedAddress && (
-                                <div className="text-sm break-all">
-                                    Address: {deployedAddress}
-                                </div>
-                            )}
+                        <div className="text-center">
+                            <div className="text-green-500 mb-4">
+                                Starklet deployed successfully!
+                                {deployedAddress && (
+                                    <div className="text-sm break-all">
+                                        Address: {deployedAddress}
+                                    </div>
+                                )}
+                            </div>
+                            <Link 
+                                href="/starklets" 
+                                className="text-blue-500 hover:text-blue-700 underline"
+                            >
+                                View your Starklets
+                            </Link>
                         </div>
                     )}
                     
