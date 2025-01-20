@@ -1,6 +1,10 @@
-import { stark, ec, encode, hash } from 'starknet';
+import { stark, ec, encode, hash, BigNumberish } from 'starknet';
 import open from 'open';
+import deployedContracts from '@ss-2/nextjs/contracts/deployedContracts';
 
+const STARKLET_FACTORY_ADDRESS = deployedContracts.devnet.StarkletFactory.address;
+
+const STARKLET_CLASS_HASH = '0x6a21c389449dcef09f322e93d646f8f2672f12ce4f9a4463ab2280b211d1e1e';
 
 const waitForSessionCompletion = async (sessionId: string, sessionToken: string, maxAttempts = 60) => {
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -69,7 +73,7 @@ const main = async () => {
         try {
             const accountAddress = await waitForSessionCompletion(sessionId, sessionToken);
             console.log('ACCOUNT_ADDRESS=', accountAddress);
-            const starkletAddress = computeStarkletAddress(sessionToken, starkKeyPub, accountAddress);
+            const starkletAddress = computeStarkletAddress(0, starkKeyPub, accountAddress);
             console.log('STARKLET_ADDRESS=', starkletAddress);
             
             // Save configuration to file
@@ -99,15 +103,12 @@ const main = async () => {
     }
 };
 
-const computeStarkletAddress = (salt: string, publicKey: string, accountAddress: string) => {
-  // TODO: write real class hash here (or get from server, but we dont trust anyone)
-  const STARKLET_CLASS_HASH = '0x0000000000000000000000000000000000000000000000000000000000000000'
-    
+const computeStarkletAddress = (salt: BigNumberish, publicKey: string, accountAddress: string) => {    
   const starkletAddress = hash.calculateContractAddressFromHash(
     salt,
     STARKLET_CLASS_HASH,
     [publicKey],
-    accountAddress
+    STARKLET_FACTORY_ADDRESS
   );
   return starkletAddress;
 };
