@@ -1,6 +1,7 @@
 import { stark, ec, encode, hash } from 'starknet';
 import open from 'open';
 
+
 const waitForSessionCompletion = async (sessionId: string, sessionToken: string, maxAttempts = 60) => {
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
     let attempts = 0;
@@ -50,7 +51,8 @@ const main = async () => {
             signature: {
                 r: signature.r.toString(),
                 s: signature.s.toString(),
-            }
+            },
+            publicKey: starkKeyPub,
         })
     });
 

@@ -12,6 +12,7 @@
     ]
   },
   "scripts": {
+    "cli": "yarn workspace @ss-2/cli start",
     "chain": "yarn workspace @ss-2/snfoundry chain",
     "deploy": "yarn workspace @ss-2/snfoundry deploy",
     "deploy:no-reset": "yarn workspace @ss-2/snfoundry deploy --no-reset",

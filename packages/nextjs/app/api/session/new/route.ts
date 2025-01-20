@@ -4,13 +4,14 @@ import { supabase } from '~~/lib/supabase';
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { fullPublicKey, sessionToken, signature } = body;
+        const { fullPublicKey, sessionToken, signature, publicKey } = body;
 
         // Insert the session data into Supabase
         const { data, error } = await supabase
             .from('sessions')
             .insert([
                 {
+                    public_key: publicKey,
                     full_public_key: fullPublicKey,
                     session_token: sessionToken,
                     signature_r: signature.r,

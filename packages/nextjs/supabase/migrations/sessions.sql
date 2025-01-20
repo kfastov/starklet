@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS sessions (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     full_public_key TEXT NOT NULL,
+    public_key TEXT NOT NULL,
     session_token TEXT NOT NULL,
     signature_r TEXT NOT NULL,
     signature_s TEXT NOT NULL,

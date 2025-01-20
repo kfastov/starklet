@@ -2,7 +2,7 @@
   "name": "@ss-2/snfoundry",
   "version": "0.0.1",
   "scripts": {
-    "chain": "starknet-devnet --seed 0 --account-class cairo1",
+    "chain": "starknet-devnet --seed 0 --account-class cairo1 --fork-network https://starknet-sepolia.public.blastapi.io/rpc/v0_7",
     "deploy": "ts-node scripts-ts/helpers/deploy-wrapper.ts",
     "deploy:no-reset": "yarn workspace @ss-2/snfoundry deploy --no-reset",
     "test": "cd contracts && snforge test",

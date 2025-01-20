@@ -3,11 +3,11 @@ use starknet::{ContractAddress, ClassHash};
 
 #[starknet::interface]
 pub trait IStarkletFactory<TContractState> {
-    fn deploy_starklet(ref self: TContractState, settings: StarkletDeploySettings);
-    fn get_starklet_class_hash(ref self: TContractState) -> ClassHash;
+    fn deploy_starklet(ref self: TContractState, settings: StarkletDeploySettings) -> ContractAddress;
+    fn get_starklet_class_hash(self: @TContractState) -> ClassHash;
     fn set_starklet_class_hash(ref self: TContractState, class_hash: ClassHash);
-    fn get_user_starklets_count(ref self: TContractState, owner: ContractAddress) -> u256;
-    fn get_user_starklet_at(ref self: TContractState, owner: ContractAddress, index: u256) -> ContractAddress;
+    fn get_user_starklets_count(self: @TContractState, owner: ContractAddress) -> u256;
+    fn get_user_starklet_at(self: @TContractState, owner: ContractAddress, index: u256) -> ContractAddress;
 }
 
 #[derive(Drop, Serde)]
@@ -72,13 +72,14 @@ mod StarkletFactory {
     }
 
     #[constructor]
-    fn constructor(ref self: ContractState, owner: ContractAddress) {
+    fn constructor(ref self: ContractState, owner: ContractAddress, starklet_class_hash: ClassHash) {
         self.ownable.initializer(owner);
+        self.starklet_class_hash.write(starklet_class_hash);
     }
 
     #[abi(embed_v0)]
     impl StarkletFactoryImpl of IStarkletFactory<ContractState> {
-        fn deploy_starklet(ref self: ContractState, settings: StarkletDeploySettings) {
+        fn deploy_starklet(ref self: ContractState, settings: StarkletDeploySettings) -> ContractAddress {
             let starklet_class_hash = self.starklet_class_hash.read();
 
             // check that starklet_class_hash is set (non-zero)
@@ -121,9 +122,11 @@ mod StarkletFactory {
             let current_count = self.user_starklets_count.read(owner);
             self.user_starklets.write((owner, current_count), starklet_address);
             self.user_starklets_count.write(owner, current_count + 1_u256);
+
+            starklet_address
         }
 
-        fn get_starklet_class_hash(ref self: ContractState) -> ClassHash {
+        fn get_starklet_class_hash(self: @ContractState) -> ClassHash {
             self.starklet_class_hash.read()
         }
 
@@ -132,11 +135,11 @@ mod StarkletFactory {
             self.starklet_class_hash.write(class_hash);
         }
 
-        fn get_user_starklets_count(ref self: ContractState, owner: ContractAddress) -> u256 {
+        fn get_user_starklets_count(self: @ContractState, owner: ContractAddress) -> u256 {
             self.user_starklets_count.read(owner)
         }
 
-        fn get_user_starklet_at(ref self: ContractState, owner: ContractAddress, index: u256) -> ContractAddress {
+        fn get_user_starklet_at(self: @ContractState, owner: ContractAddress, index: u256) -> ContractAddress {
             let count = self.user_starklets_count.read(owner);
             assert!(index < count, "Index out of bounds");
             self.user_starklets.read((owner, index))

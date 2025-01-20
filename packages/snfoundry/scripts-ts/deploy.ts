@@ -53,6 +53,7 @@ const deployScript = async (): Promise<void> => {
     contract: "StarkletFactory",
     constructorArgs: {
       owner: deployer.address,
+      starklet_class_hash: accountClassHash,
     },
   });
 };

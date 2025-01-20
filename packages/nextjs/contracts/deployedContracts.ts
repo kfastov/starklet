@@ -7,7 +7,7 @@ const deployedContracts = {
   devnet: {
     StarkletFactory: {
       address:
-        "0x2122e0e977e7e4b6b2a4835d8af5df13b455136c84c2a62a7461c80697185b4",
+        "0xa153e7a4914852c672690bb5fb7501ad45e43042ffb279b2c1850954fbf0b9",
       abi: [
         {
           type: "impl",
@@ -93,7 +93,11 @@ const deployedContracts = {
                   type: "contracts::StarkletFactory::StarkletDeploySettings",
                 },
               ],
-              outputs: [],
+              outputs: [
+                {
+                  type: "core::starknet::contract_address::ContractAddress",
+                },
+              ],
               state_mutability: "external",
             },
             {
@@ -105,7 +109,7 @@ const deployedContracts = {
                   type: "core::starknet::class_hash::ClassHash",
                 },
               ],
-              state_mutability: "external",
+              state_mutability: "view",
             },
             {
               type: "function",
@@ -133,7 +137,7 @@ const deployedContracts = {
                   type: "core::integer::u256",
                 },
               ],
-              state_mutability: "external",
+              state_mutability: "view",
             },
             {
               type: "function",
@@ -153,7 +157,7 @@ const deployedContracts = {
                   type: "core::starknet::contract_address::ContractAddress",
                 },
               ],
-              state_mutability: "external",
+              state_mutability: "view",
             },
           ],
         },
@@ -205,6 +209,10 @@ const deployedContracts = {
             {
               name: "owner",
               type: "core::starknet::contract_address::ContractAddress",
+            },
+            {
+              name: "starklet_class_hash",
+              type: "core::starknet::class_hash::ClassHash",
             },
           ],
         },
@@ -320,7 +328,7 @@ const deployedContracts = {
         },
       ],
       classHash:
-        "0x33da8591beb3cd86e45855451ee40500036b2b012fe0d841668b44418d55a95",
+        "0x2b902cffe2ecfece5c5589370936173d8bfecb67044fbac5627e98088c574fe",
     },
   },
 } as const;

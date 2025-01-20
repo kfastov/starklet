@@ -3,7 +3,7 @@ import { Account, RpcProvider } from 'starknet';
 import { supabase } from '~~/lib/supabase';
 
 const provider = new RpcProvider({
-    nodeUrl: 'https://starknet-sepolia.public.blastapi.io',
+    nodeUrl: 'http://localhost:5050',
 });
 
 export async function POST(request: NextRequest) {
